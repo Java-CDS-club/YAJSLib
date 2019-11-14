@@ -1,0 +1,28 @@
+plugins {
+    id 'java'
+}
+
+group 'net.devtech'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    // optional
+    compile group: 'org.jetbrains', name: 'annotations', version: '17.0.0'
+    // optional
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.9.10.1'
+    // optional
+    compile 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.10.0'
+
+    // mandatory
+    compile 'it.unimi.dsi:fastutil:8.3.0'
+    // mandatory
+    compile "com.esotericsoftware:reflectasm:1.11.9"
+}
