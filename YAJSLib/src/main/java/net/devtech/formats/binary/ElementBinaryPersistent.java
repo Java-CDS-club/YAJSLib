@@ -1,6 +1,6 @@
 package net.devtech.formats.binary;
 
-import net.devtech.util.ThrowingTriConsumer;
+import net.devtech.util.functions.ThrowingTriConsumer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import java.io.DataInputStream;

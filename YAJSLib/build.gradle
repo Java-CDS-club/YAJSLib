@@ -25,4 +25,6 @@ dependencies {
     compile 'it.unimi.dsi:fastutil:8.3.0'
     // mandatory
     compile "com.esotericsoftware:reflectasm:1.11.9"
+    // mandatory
+    compile files("libs/DevLib-1.0-SNAPSHOT.jar")
 }

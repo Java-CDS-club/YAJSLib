@@ -1,10 +1,9 @@
 package net.devtech.formats.binary;
 
 import com.esotericsoftware.reflectasm.FieldAccess;
-import net.devtech.formats.Persistent;
 import net.devtech.PersistentManager;
-import net.devtech.util.ThrowingTriConsumer;
 import net.devtech.util.UnsafeReflection;
+import net.devtech.util.functions.ThrowingTriConsumer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import java.io.DataInputStream;
