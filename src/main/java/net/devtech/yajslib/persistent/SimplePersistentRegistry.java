@@ -22,6 +22,8 @@ public class SimplePersistentRegistry implements PersistentRegistry {
 
 	@Override
 	public <T> void register(Class<T> type, Persistent<T> persistent) {
+		if(persistent.versionHash() == 0)
+			throw new IllegalArgumentException("Version cannot be 0!");
 		this.persistentMap.put(type, persistent);
 		this.map.put(persistent.versionHash(), persistent);
 	}
