@@ -1,6 +1,8 @@
 package net.devtech.yajslib.persistent;
 
+import net.devtech.yajslib.io.PersistentInput;
 import net.devtech.yajslib.io.PersistentInputStream;
+import net.devtech.yajslib.io.PersistentOutput;
 import net.devtech.yajslib.io.PersistentOutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -23,14 +25,14 @@ public interface Persistent<T> {
 	 * @param object the object to serialize
 	 * @param output the output stream
 	 */
-	void write(Object object, PersistentOutputStream output);
+	void write(T object, PersistentOutput output) throws IOException;
 
 	/**
 	 * read an object from the input stream
 	 * @param input the input stream
 	 * @return may be null
 	 */
-	T read(PersistentInputStream input);
+	T read(PersistentInput input) throws IOException;
 
 	/**
 	 * create a blank object

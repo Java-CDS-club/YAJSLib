@@ -7,6 +7,7 @@ import java.lang.annotation.Target;
 
 /**
  * any method annotated with this should only have one parameter as the output stream, and must be declared <b>final</b>
+ * @see net.devtech.yajslib.io.PersistentOutput
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
