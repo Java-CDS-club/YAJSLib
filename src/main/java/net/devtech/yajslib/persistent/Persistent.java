@@ -36,7 +36,24 @@ public interface Persistent<T> {
 
 	/**
 	 * create a blank object
-	 * @return
 	 */
 	T blank();
+
+	/**
+	 * direct write
+	 */
+	default byte[] toByteArray(PersistentRegistry registry, T object) throws IOException {
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		PersistentOutputStream pout = new PersistentOutputStream(out, registry);
+		this.write(object, pout);
+		pout.flush();
+		return out.toByteArray();
+	}
+
+	/**
+	 * direct read
+	 */
+	default T fromByteArray(PersistentRegistry registry, byte[] data) throws IOException {
+		return this.read(new PersistentInputStream(new ByteArrayInputStream(data), registry));
+	}
 }

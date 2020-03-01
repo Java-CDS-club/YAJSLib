@@ -7,8 +7,20 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 public interface PersistentRegistry {
+
+	/**
+	 * get the persistent with the given version hash
+	 */
 	Persistent<?> fromId(long hash);
-	<T> Persistent<T> forClass(Class<T> type);
+
+	/**
+	 * get the latest persistent for the given class
+	 */
+	<T> Persistent<T> forClass(Class<T> type, boolean searchSupers);
+
+	/**
+	 * register a persistent
+	 */
 	<T> void register(Class<T> type, Persistent<T> persistent);
 
 	default byte[] toByteArray(Object object) throws IOException {
@@ -23,7 +35,7 @@ public interface PersistentRegistry {
 		return new PersistentInputStream(new ByteArrayInputStream(data), this).readPersistent();
 	}
 
-	default <T> Object blank(Class<T> type) {
-		return this.forClass(type).blank();
+	default <T> T blank(Class<T> type) {
+		return this.forClass(type, false).blank();
 	}
 }

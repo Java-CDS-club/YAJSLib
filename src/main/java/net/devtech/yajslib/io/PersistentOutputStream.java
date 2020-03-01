@@ -29,17 +29,17 @@ public class PersistentOutputStream extends ObjectOutputStream implements Persis
 		this.write(byt);
 	}
 
-	/**
-	 * do not ever call PersistentOutputStream#write(this)
-	 *
-	 * @param object brug
-	 */
 	@Override
 	public <T> void writePersistent(T object) throws IOException {
+		this.writePersistent(object, false);
+	}
+
+	@Override
+	public <T> void writePersistent(T object, boolean searchSupers) throws IOException {
 		if (object == null) {
 			this.writeLong(0);
 		} else {
-			Persistent<T> persistent = (Persistent<T>) this.registry.forClass(object.getClass());
+			Persistent<T> persistent = (Persistent<T>) this.registry.forClass(object.getClass(), searchSupers);
 			this.writeLong(persistent.versionHash());
 			persistent.write(object, this);
 		}

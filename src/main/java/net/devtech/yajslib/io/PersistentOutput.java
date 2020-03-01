@@ -22,6 +22,12 @@ public interface PersistentOutput {
 
 	<T> void writePersistent(T object) throws IOException;
 
+	<T> void writePersistent(T object, boolean searchSupers) throws IOException;
+
+	void write(byte[] bytes) throws IOException;
+
+	void write(byte[] bytes, int start, int len) throws IOException;
+
 	void writeArray(Object[] persistents) throws IOException;
 
 	/**

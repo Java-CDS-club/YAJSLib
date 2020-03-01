@@ -4,6 +4,7 @@ import net.devtech.yajslib.persistent.PersistentRegistry;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
+import java.util.UUID;
 
 public class PersistentInputStream extends ObjectInputStream implements PersistentInput {
 	private PersistentRegistry registry;
@@ -32,5 +33,10 @@ public class PersistentInputStream extends ObjectInputStream implements Persiste
 	public void readArray(Object[] objects) throws IOException {
 		for (int i = 0; i < objects.length; i++)
 			objects[i] = this.readPersistent();
+	}
+
+	@Override
+	public UUID readUUID() throws IOException {
+		return null;
 	}
 }

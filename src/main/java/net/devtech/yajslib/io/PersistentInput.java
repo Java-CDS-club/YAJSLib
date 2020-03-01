@@ -16,6 +16,8 @@ public interface PersistentInput {
 	byte readByte() throws IOException;
 	boolean readBoolean() throws IOException;
 	Object readPersistent() throws IOException;
+	int read(byte[] arr) throws IOException;
+	int read(byte[] arr, int start, int len) throws IOException;
 	/**
 	 * reads an array of persistents from the input stream
 	 * @return a newly created array of persistents

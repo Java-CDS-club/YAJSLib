@@ -22,7 +22,7 @@ public class AnnotatedPersistent<T> implements Persistent<T> {
 	private GeneralFunction read;
 
 	public AnnotatedPersistent(Class<T> type, long versionHash) {
-		this(() -> ReflectionUtil.allocate(type, true), type, versionHash);
+		this(() -> ReflectionUtil.forceAllocate(type), type, versionHash);
 	}
 
 	public AnnotatedPersistent(ThrowingSupplier<T> defaultInit, Class<T> type, long versionHash) {
