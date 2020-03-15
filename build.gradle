@@ -2,20 +2,24 @@ plugins {
     id 'java'
 }
 
-group 'org.example'
-version '1.0-SNAPSHOT'
+group 'net.devtech'
+version '1.2'
 
 sourceCompatibility = 1.8
 
+// https://gist.github.com/fernandezpablo85/03cf8b0cd2e7d8527063
+// mvn install:install-file -DgroupId=net.devtech -DartifactId=yajslib -Dversion=1.0 -Dpackaging=jar -DgeneratePom=true -DlocalRepositoryPath=.  -DcreateChecksum=true -Dfile=YOUR_JAR_FILE
 repositories {
     mavenCentral()
+    maven {
+        url = 'https://raw.githubusercontent.com/Devan-Kerman/Devan-Repo/master/'
+    }
 }
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
-    // https://mvnrepository.com/artifact/it.unimi.dsi/fastutil
     compile group: 'it.unimi.dsi', name: 'fastutil', version: '8.3.0'
-    compile files('libs/Dev-Lib-1.0-SNAPSHOT.jar')
+    compile group: 'net.devtech', name: 'dev-lib', version: '1.1'
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {

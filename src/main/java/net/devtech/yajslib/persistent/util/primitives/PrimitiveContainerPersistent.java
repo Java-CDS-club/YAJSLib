@@ -4,7 +4,7 @@ import net.devtech.utilib.functions.ThrowingSupplier;
 import net.devtech.utilib.structures.inheritance.InheritedMap;
 import net.devtech.utilib.structures.lists.CompressedIntList;
 import net.devtech.utilib.structures.lists.NodedList;
-import net.devtech.utilib.unsafe.ReflectionUtil;
+import net.devtech.utilib.unsafe.UnsafeUtil;
 import net.devtech.yajslib.PrimitiveContainer;
 import net.devtech.yajslib.annotations.DependsOn;
 import net.devtech.yajslib.io.PersistentInput;
@@ -59,7 +59,7 @@ public class PrimitiveContainerPersistent<T extends PrimitiveContainer> implemen
 		this.versionHash = versionHash;
 		this.newInstance = newInstance;
 		if(USE_UNSAFE == 1)
-			this.klass = ReflectionUtil.getKlassFromClass(type);
+			this.klass = UnsafeUtil.getKlassFromClass(type);
 		else
 			this.klass = 0;
 		this.fields = FIELD_MAP.getAttributes(type);
@@ -69,7 +69,7 @@ public class PrimitiveContainerPersistent<T extends PrimitiveContainer> implemen
 
 		CompressedIntList list = new CompressedIntList(this.fields.size() - 1);
 		if (USE_UNSAFE == 1) // use unsafe ordering (the java object memory model)
-			this.fields.stream().sorted(Comparator.comparingLong(ReflectionUtil.UNSAFE::objectFieldOffset)).forEachOrdered(f -> list.add(this.fields.indexOf(f)));
+			this.fields.stream().sorted(Comparator.comparingLong(UnsafeUtil.UNSAFE::objectFieldOffset)).forEachOrdered(f -> list.add(this.fields.indexOf(f)));
 		else for (int i = 0; i < this.fields.size(); i++) { // regular ordering (reflection order)
 			list.add(i);
 		}
@@ -94,9 +94,9 @@ public class PrimitiveContainerPersistent<T extends PrimitiveContainer> implemen
 		output.writeByte(this.header);
 		output.writePersistent(this.fieldOrder);
 		if (USE_UNSAFE == 1) {
-			byte[] arr = ReflectionUtil.unsafeCast(object, ReflectionUtil.BYTE_ARR_KLASS);
+			byte[] arr = UnsafeUtil.unsafeCast(object, UnsafeUtil.BYTE_ARR_KLASS);
 			output.write(arr);
-			ReflectionUtil.unsafeCast(object, this.klass);
+			UnsafeUtil.unsafeCast(object, this.klass);
 		} else {
 			try { // write the object like normal
 				for (Field field : this.fields) {
@@ -135,7 +135,7 @@ public class PrimitiveContainerPersistent<T extends PrimitiveContainer> implemen
 		if((USE_UNSAFE & header) == 1) { // if the object was serialized with unsafe
 			input.readPersistent(); // dump header
 			byte[] data = new byte[input.readInt()];
-			return ReflectionUtil.unsafeCast(data, this.klass);
+			return UnsafeUtil.unsafeCast(data, this.klass);
 		} else {
 			try {
 				CompressedIntList list = (CompressedIntList) input.readPersistent();

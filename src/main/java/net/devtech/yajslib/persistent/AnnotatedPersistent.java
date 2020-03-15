@@ -3,7 +3,7 @@ package net.devtech.yajslib.persistent;
 import net.devtech.utilib.functions.GeneralFunction;
 import net.devtech.utilib.functions.ThrowingSupplier;
 import net.devtech.utilib.structures.inheritance.InheritedMap;
-import net.devtech.utilib.unsafe.ReflectionUtil;
+import net.devtech.utilib.unsafe.UnsafeUtil;
 import net.devtech.yajslib.annotations.Reader;
 import net.devtech.yajslib.annotations.Writer;
 import net.devtech.yajslib.io.PersistentInput;
@@ -22,7 +22,7 @@ public class AnnotatedPersistent<T> implements Persistent<T> {
 	private GeneralFunction read;
 
 	public AnnotatedPersistent(Class<T> type, long versionHash) {
-		this(() -> ReflectionUtil.forceAllocate(type), type, versionHash);
+		this(() -> UnsafeUtil.forceAllocate(type), type, versionHash);
 	}
 
 	public AnnotatedPersistent(ThrowingSupplier<T> defaultInit, Class<T> type, long versionHash) {
@@ -41,7 +41,7 @@ public class AnnotatedPersistent<T> implements Persistent<T> {
 						throw new IllegalArgumentException(attribute + " has illegal parameters, it must have only one parameter (" + PersistentInput.class + ")");
 
 					attribute.setAccessible(true);
-					this.read = ReflectionUtil.getMethod(attribute);
+					this.read = UnsafeUtil.getMethod(attribute);
 					break;
 				}
 			}
@@ -57,7 +57,7 @@ public class AnnotatedPersistent<T> implements Persistent<T> {
 						throw new IllegalArgumentException(attribute + " has illegal parameters, it must have only one parameter (" + PersistentOutput.class + ")");
 
 					attribute.setAccessible(true);
-					this.write = ReflectionUtil.getMethod(attribute);
+					this.write = UnsafeUtil.getMethod(attribute);
 					break;
 				}
 			}

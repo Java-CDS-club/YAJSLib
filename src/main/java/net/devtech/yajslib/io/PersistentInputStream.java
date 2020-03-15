@@ -34,9 +34,4 @@ public class PersistentInputStream extends ObjectInputStream implements Persiste
 		for (int i = 0; i < objects.length; i++)
 			objects[i] = this.readPersistent();
 	}
-
-	@Override
-	public UUID readUUID() throws IOException {
-		return null;
-	}
 }

@@ -69,5 +69,20 @@ public class PersistentOutputStream extends ObjectOutputStream implements Persis
 		}
 	}
 
+	@Override
+	public void writeArray(Object[] persistents, boolean searchSupers) throws IOException {
+		this.writeInt(persistents.length);
+		for (Object object : persistents) {
+			this.writePersistent(object, searchSupers);
+		}
+	}
+
+	@Override
+	public void writeArrayNoLength(Object[] objects, boolean searchSupers) throws IOException {
+		for (Object object : objects) {
+			this.writePersistent(object, searchSupers);
+		}
+	}
+
 
 }

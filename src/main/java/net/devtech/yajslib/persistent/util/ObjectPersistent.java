@@ -1,7 +1,7 @@
 package net.devtech.yajslib.persistent.util;
 
 import net.devtech.utilib.structures.inheritance.InheritedMap;
-import net.devtech.utilib.unsafe.ReflectionUtil;
+import net.devtech.utilib.unsafe.UnsafeUtil;
 import net.devtech.yajslib.annotations.DependsOn;
 import net.devtech.yajslib.io.PersistentInput;
 import net.devtech.yajslib.io.PersistentOutput;
@@ -50,7 +50,7 @@ public class ObjectPersistent implements Persistent<Object> {
 	public Object read(PersistentInput input) throws IOException {
 		try {
 			Class<?> type = (Class<?>) input.readPersistent();
-			Object alloc = ReflectionUtil.forceAllocate(type);
+			Object alloc = UnsafeUtil.forceAllocate(type);
 			for (Field attribute : this.fields.getAttributes(type)) {
 				attribute.set(alloc, input.readPersistent());
 			}

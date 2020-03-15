@@ -35,6 +35,14 @@ public interface PersistentOutput {
 	 */
 	void writeArrayNoLength(Object[] objects) throws IOException;
 
+	void writeArray(Object[] persistents, boolean searchSupers) throws IOException;
+
+	/**
+	 * write an array but not it's length
+	 */
+	void writeArrayNoLength(Object[] objects, boolean searchSupers) throws IOException;
+
+
 	default void writeUUID(UUID uuid) throws IOException {
 		this.writeLong(uuid.getMostSignificantBits());
 		this.writeLong(uuid.getLeastSignificantBits());
